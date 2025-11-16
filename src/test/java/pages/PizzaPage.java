@@ -21,7 +21,6 @@ public class PizzaPage {
         PageFactory.initElements(driver, this);
     }
 
-    // --- Элементы страницы ---
     @FindBy(css = "select.orderby")
     private WebElement sortDropdown;
 
@@ -34,9 +33,7 @@ public class PizzaPage {
     @FindBy(css = "a.add_to_cart_button")
     private List<WebElement> addToCartButtons;
 
-    // --- Методы ---
 
-    // Применить сортировку
     public void selectSortOption(String optionText) {
         Select select = new Select(sortDropdown);
         select.selectByVisibleText(optionText);
@@ -46,10 +43,8 @@ public class PizzaPage {
 
     }
 
-    // Получить все цены пицц
     public List<Double> getPizzaPrices() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        // Ждём появления хотя бы одного видимого элемента цены
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.price bdi")));
 
         List<WebElement> priceElements = driver.findElements(By.cssSelector("span.price bdi"));
@@ -63,9 +58,6 @@ public class PizzaPage {
         return prices;
     }
 
-
-
-    // Применить фильтр по цене (если есть поля min/max)
     public void applyPriceFilter(int min, int max) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
 
@@ -77,12 +69,10 @@ public class PizzaPage {
         js.executeScript("arguments[0].value = arguments[1];", maxInput, String.valueOf(max));
 
         filterButton.click();
-
         new WebDriverWait(driver, Duration.ofSeconds(5))
-                .until(ExpectedConditions.visibilityOfAllElements(pizzaPrices));
+                .until(ExpectedConditions.numberOfElementsToBeMoreThan(By.cssSelector("span.price bdi"), 0));
+        pizzaPrices = driver.findElements(By.cssSelector("span.price bdi"));
     }
-
-    // Добавить первую пиццу в корзину
 
     public List<WebElement> getAddToCartButtons() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -105,5 +95,30 @@ public class PizzaPage {
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("a.added_to_cart.wc-forward")));
     }
+
+    /*public void addFirstPizzaToCart() {
+        // Получаем список кнопок "В корзину"
+        List<WebElement> buttons = getAddToCartButtons();
+        if (buttons.isEmpty()) {
+            throw new IllegalStateException("Кнопки 'В корзину' не найдены на странице");
+        }
+
+        WebElement firstButton = buttons.get(0);
+
+        // Скроллим к кнопке, чтобы она была видна
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", firstButton);
+
+        // Кликаем по первой кнопке
+        firstButton.click();
+
+        // Ждём появления кнопки "Просмотр корзины" после добавления
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+                By.cssSelector("a.added_to_cart.wc-forward")));
+
+        // Можно дополнительно подождать, чтобы кнопка была видимой
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.cssSelector("a.added_to_cart.wc-forward")));
+    }*/
 }
 

@@ -5,9 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import pages.AccountPage;
 import pages.BonusProgramPage;
-import pages.LoginPage;
 
 import java.time.Duration;
 

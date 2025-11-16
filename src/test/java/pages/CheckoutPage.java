@@ -99,15 +99,12 @@ public class CheckoutPage {
         emailInput.sendKeys(email);
     }
 
-    // Выбор оплаты наличными
     public void selectCashPayment() {
         payCashOption.click();
     }
 
-    // Оформление заказа
     public void placeOrder() {
         placeOrderButton.click();
-        //wait.until(ExpectedConditions.visibilityOf(successOrderMessage));
     }
 
     public boolean isOrderSuccess() {

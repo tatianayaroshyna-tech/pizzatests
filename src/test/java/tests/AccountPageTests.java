@@ -5,7 +5,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.AccountPage;
 import pages.LoginPage;
-
 import java.time.Duration;
 
 public class AccountPageTests {
