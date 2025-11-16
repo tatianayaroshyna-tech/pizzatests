@@ -1,13 +1,11 @@
 package pages;
 
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,35 +88,9 @@ public class PizzaPage {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", firstButton);
         firstButton.click();
 
-        // Ждём появления кнопки "Подробнее"
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("a.added_to_cart.wc-forward")));
     }
-
-    /*public void addFirstPizzaToCart() {
-        // Получаем список кнопок "В корзину"
-        List<WebElement> buttons = getAddToCartButtons();
-        if (buttons.isEmpty()) {
-            throw new IllegalStateException("Кнопки 'В корзину' не найдены на странице");
-        }
-
-        WebElement firstButton = buttons.get(0);
-
-        // Скроллим к кнопке, чтобы она была видна
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", firstButton);
-
-        // Кликаем по первой кнопке
-        firstButton.click();
-
-        // Ждём появления кнопки "Просмотр корзины" после добавления
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.presenceOfElementLocated(
-                By.cssSelector("a.added_to_cart.wc-forward")));
-
-        // Можно дополнительно подождать, чтобы кнопка была видимой
-        wait.until(ExpectedConditions.visibilityOfElementLocated(
-                By.cssSelector("a.added_to_cart.wc-forward")));
-    }*/
 }
 

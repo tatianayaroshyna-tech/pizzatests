@@ -60,7 +60,6 @@ public class CheckoutPage {
     @FindBy(id = "terms")
     private WebElement termsCheckbox;
 
-    // Установка даты
     public void setPickupDate(String date) {
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("arguments[0].value = arguments[1]; arguments[0].dispatchEvent(new Event('change'));",
@@ -71,7 +70,6 @@ public class CheckoutPage {
         return dateInput.getAttribute("value");
     }
 
-    // Заполнение формы
     public void fillForm(String firstName, String lastName, String address,
                          String city, String state, String postcode, String phone, String email) {
         firstNameInput.clear();

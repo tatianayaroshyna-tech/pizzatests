@@ -32,7 +32,7 @@ public class DeliveryPage {
 
     public double getTotalPrice() {
         String text = wait.until(ExpectedConditions.visibilityOfElementLocated(totalPriceField)).getText();
-        // удаляем символы рубля и пробелы
+
         text = text.replaceAll("[^0-9,\\.]", "").replace(",", ".");
         return Double.parseDouble(text);
     }
