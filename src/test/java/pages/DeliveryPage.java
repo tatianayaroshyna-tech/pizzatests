@@ -32,31 +32,27 @@ public class DeliveryPage {
 
     public double getTotalPrice() {
         String text = wait.until(ExpectedConditions.visibilityOfElementLocated(totalPriceField)).getText();
-        // удаляем символы рубля и пробелы
+
         text = text.replaceAll("[^0-9,\\.]", "").replace(",", ".");
         return Double.parseDouble(text);
     }
 
     public void clickPlaceOrder() {
-        driver.findElement(placeOrderButton).click();
-    }
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.id("place_order")));
 
-    public String getErrorMessage() {
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(errorMessage)).getText();
+        ((JavascriptExecutor) driver)
+                .executeScript("document.querySelector('#place_order').click();");
     }
 
     public void acceptTerms() {
-        // Ждём, пока чекбокс станет кликабельным
-        WebElement element = new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(By.id("terms")));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        By termsCheckbox = By.id("terms");
 
-        // Скроллим к элементу
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
-
-        // Проверяем и кликаем
-        if (!element.isSelected()) {
-            element.click();
-        }
+        wait.until(ExpectedConditions.presenceOfElementLocated(termsCheckbox));
+        ((JavascriptExecutor) driver).executeScript(
+                "document.querySelector('#terms').click();"
+        );
     }
 
     public String waitForOrderSuccessMessage() {

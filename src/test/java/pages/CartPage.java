@@ -44,7 +44,6 @@ public class CartPage {
         PageFactory.initElements(driver, this);
     }
 
-    //  Увеличение количества товара
     public void increaseQuantity(int index) {
         List<WebElement> qtys = getQuantityInputsList();
         if (qtys.size() <= index) {
@@ -57,7 +56,6 @@ public class CartPage {
         updateCart();
     }
 
-    // Ожидание обновления элементов страницы
     public void increaseQuantityAndWaitForTotal(int index, double oldTotal) {
         increaseQuantity(index);
         wait.until(driver -> getTotalAmount() > oldTotal);
@@ -68,7 +66,6 @@ public class CartPage {
         wait.until(driver -> getTotalAmount() < oldTotal);
     }
 
-    //  Уменьшение количества товара
     public void decreaseQuantity(int index) {
         List<WebElement> qtys = getQuantityInputsList();
         if (qtys.size() <= index) {
@@ -103,18 +100,12 @@ public class CartPage {
         return Integer.parseInt(Objects.requireNonNull(qtys.get(index).getAttribute("value")));
     }
 
-    /*public double getTotalAmount() {
-        String totalText = subtotalAmount.getText().replace("₽", "").trim().replace(",", ".");
-        return Double.parseDouble(totalText);
-    }*/
-
     public double getTotalAmount() {
         WebElement totalElement = driver.findElement(By.cssSelector(".order-total .woocommerce-Price-amount"));
         String totalText = totalElement.getText().replaceAll("[^\\d,\\.]", "").replace(",", ".");
         return Double.parseDouble(totalText);
     }
-
-    //  Применение промокода
+    
     public void applyPromoCode(String code) {
         promoCodeInput.clear();
         promoCodeInput.sendKeys(code);

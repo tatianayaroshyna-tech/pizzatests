@@ -76,7 +76,6 @@ public class PizzaPageTests {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", firstButton);
         firstButton.click();
 
-        // Ждём появления новой кнопки "Подробнее"
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         WebElement moreButton = wait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.cssSelector("a.added_to_cart.wc-forward")));

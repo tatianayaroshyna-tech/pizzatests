@@ -42,6 +42,8 @@ public class CheckoutPageTests {
     @Test
     public void testSetOrderDate() {
         String date = "2025-12-31";
+        driver.get("https://pizzeria.skillbox.cc/checkout/");
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.setPickupDate(date);
 
         Assertions.assertEquals(date, checkoutPage.getPickupDate(),
@@ -68,8 +70,4 @@ public class CheckoutPageTests {
                 "The success message for the order is not displayed");
         Assertions.assertTrue(driver.getCurrentUrl().contains("order-received"));
     }
-
-
-
-
 }
